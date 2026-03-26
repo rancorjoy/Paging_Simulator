@@ -78,10 +78,20 @@ int set_page(const std::vector<int> page_map, int page_index) {
 }
 
 int write_page(int page_index) {
-	int data = 0; // container variable
-	std::cout << "Enter data to write to page " << page_index << ": ";
-	std::cin >> data;
-	return data;		// return the data to write to the page
+	while (true)
+	{
+		int data = 0; // container variable
+		std::cout << "Enter data to write to page " << page_index << ": ";
+		std::cin >> data;
+		if (data > -1)
+		{
+			return data;		// return the data to write to the page
+		}
+		else
+		{
+			std::cout << "Invalid input. Please enter a non-negative integer for the data.\n";
+		}
+	}
 }
 
 std::vector<int> set_page_map(std::vector<int> page_map, int num_frames){
@@ -238,13 +248,6 @@ void print_frame_table(std::vector<int> frame_map) {
 	}
 }
 
-void print_memory_state(std::vector<int> page_map, std::vector<int> page_data, std::vector<bool> page_valid) {
-	std::cout << "\nMEMORY STATE:\n";
-	std::cout << "Page Index\tFrame Index\tData\tValid\n";
-	for (int i = 0; i < page_map.size(); i++) {
-		std::cout << i << "\t\t" << page_map[i] << "\t\t" << page_data[i] << "\t" << (page_valid[i] ? "Yes" : "No") << "\n";
-	}
-}
 
 int main()
 {
@@ -266,6 +269,5 @@ int main()
 
 	print_page_table(page_map, page_data, page_valid);			// call function to print the page table for the simulation
 	print_frame_table(frame_map);												// call function to print the frame table for the simulation
-	print_memory_state(page_map, page_data, page_valid);		// call function to print the memory state for the simulation
 }
 
